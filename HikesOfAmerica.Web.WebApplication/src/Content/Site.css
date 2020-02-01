@@ -1,0 +1,112 @@
+html {
+    overflow: hidden;
+}
+
+#hikeTitle {
+    font-size: 2em;
+}
+
+.subHeader {
+    font-size: 1.5em;
+}
+
+#map {
+    height: 90%;
+    width: 100%;
+   }
+
+#stateDropdown {
+    padding-right: 20px;
+}
+
+.leaflet-container {
+    height: 90vh;
+    width: 100%;
+}
+
+#searchBtn, #addNewLocationBtn {
+    color: black;
+}
+
+#trailsBody {
+    margin-left: 20px;
+}
+
+#locationImage {
+    padding-left: 20px;
+    height: 50%;
+    width: 50%;
+}
+
+.trailsDetails {
+    line-height: .1;
+}
+
+#trailInfo {
+    padding-bottom: 1px;
+}
+
+.display-block {
+    display: block !important;
+  }
+  
+.display-none {
+    display: none;
+}
+
+.left-td {
+    padding-right: 30px;
+    padding-top: 12px;
+}
+
+.modal {
+    position: relative;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+  }
+  
+  .modal-main {
+    position: relative;
+    background: white;
+    width: 750px;
+    height: 80%;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+  }
+  
+#submit-btn {
+    color: black;
+    margin: 0 auto;
+    display: block;
+    top: 90%;
+    position: relative;
+}
+
+
+.submit-table {
+    margin-top: 10%;
+    width: 100%;
+}
+
+.submit-row {
+    height: 70px;
+    width: 40%;
+}
+
+.form-element {
+    padding-right: 30px;
+    text-align: right;
+}
+
+.form-input {
+    width: 80% !important;
+}
+
+.dropdown-menu.show {
+    overflow-y: auto;
+    height: 500px;
+}
