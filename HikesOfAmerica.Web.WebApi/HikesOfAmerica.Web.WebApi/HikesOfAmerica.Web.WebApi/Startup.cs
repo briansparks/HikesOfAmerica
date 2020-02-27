@@ -1,4 +1,5 @@
 ﻿using HikesOfAmerica.Core.Interfaces;
+using HikesOfAmerica.Core.Publishing;
 using HikesOfAmerica.Data.Logic;
 using HikesOfAmerica.Data.Persistence;
 using HikesOfAmerica.Data.Persistence.Interfaces;
@@ -43,8 +44,11 @@ namespace HikesOfAmerica.Web.WebApi
             channel.ExchangeDeclare(exchange: "locations", type: ExchangeType.Fanout);
             channel.QueueBind("HikesOfAmerica.Messaging.Services.Consumers.LocationsConsumerQueue", "locations", "");
 
+            var publisher = new RabbitMQPublisher(channel);
+
+            services.AddSingleton<IPublisher>(publisher);
             services.AddSingleton<IRepository>(repo);
-            services.AddSingleton<ILocationsManager>(new LocationsManager(channel, repo, null));
+            services.AddSingleton<ILocationsManager>(new LocationsManager(publisher, repo, null));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

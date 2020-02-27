@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikesOfAmerica.Messaging.Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikesOfAmerica.Tests", "HikesOfAmerica.Tests\HikesOfAmerica.Tests.csproj", "{B363D1B6-767E-49DC-8F30-11A817FC413D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikesOfAmerica.Messaging.Core", "HikesOfAmerica.Messaging.Core\HikesOfAmerica.Messaging.Core.csproj", "{A959351A-FCA6-44B0-B793-1848CA757DBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B363D1B6-767E-49DC-8F30-11A817FC413D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B363D1B6-767E-49DC-8F30-11A817FC413D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B363D1B6-767E-49DC-8F30-11A817FC413D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A959351A-FCA6-44B0-B793-1848CA757DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A959351A-FCA6-44B0-B793-1848CA757DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A959351A-FCA6-44B0-B793-1848CA757DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A959351A-FCA6-44B0-B793-1848CA757DBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,6 @@
 ﻿using HikesOfAmerica.Data.Persistence.DataModels;
 using HikesOfAmerica.Data.Persistence.Interfaces;
+using HikesOfAmerica.Messaging.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;

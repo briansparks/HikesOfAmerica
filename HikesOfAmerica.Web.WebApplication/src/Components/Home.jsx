@@ -39,8 +39,6 @@ export default class Home extends Component {
         var hikes = [];
         hikes.push({"Name": hikeName, "Distance": distance});
 
-        // var jsonString = JSON.stringify(s);
-
         const formData = new FormData();
         formData.append("Name", locationName);
         formData.append("trails", hikes);
