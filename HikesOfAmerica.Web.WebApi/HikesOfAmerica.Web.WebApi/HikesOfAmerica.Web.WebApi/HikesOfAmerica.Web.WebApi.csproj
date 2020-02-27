@@ -11,10 +11,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HikesOfAmerica.Data.Logic\HikesOfAmerica.Core.csproj" />
+    <ProjectReference Include="..\HikesOfAmerica.Messaging.Core\HikesOfAmerica.Messaging.Core.csproj" />
   </ItemGroup>
 
 </Project>

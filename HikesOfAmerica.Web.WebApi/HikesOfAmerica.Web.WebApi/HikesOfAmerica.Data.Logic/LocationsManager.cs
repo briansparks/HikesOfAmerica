@@ -4,7 +4,6 @@ using HikesOfAmerica.Data.Persistence.DataModels;
 using HikesOfAmerica.Data.Persistence.Interfaces;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,15 +13,13 @@ namespace HikesOfAmerica.Data.Logic
 {
     public class LocationsManager : ILocationsManager
     {
-        private IModel channel;
+        private IPublisher publisher;
         private IRepository locationsRepository;
         private ILogger<ILocationsManager> logger;
 
-        private const string exchangeName = "Locations";
-
-        public LocationsManager(IModel argChannel, IRepository argLocationsRepository, ILogger<ILocationsManager> argLogger)
+        public LocationsManager(IPublisher argPublisher, IRepository argLocationsRepository, ILogger<ILocationsManager> argLogger)
         {
-            channel = argChannel;
+            publisher = argPublisher;
             locationsRepository = argLocationsRepository;
             logger = argLogger;
         }
@@ -78,10 +75,7 @@ namespace HikesOfAmerica.Data.Logic
                 var message = JsonConvert.SerializeObject(request);
                 var body = Encoding.UTF8.GetBytes(message);
 
-                channel.BasicPublish(exchange: exchangeName,
-                      routingKey: "",
-                      basicProperties: null,
-                      body: body);
+                publisher.Publish(body);
 
                 return true;
             }
