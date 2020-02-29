@@ -1,43 +1,26 @@
 ﻿using HikesOfAmerica.Data.Persistence.DataModels;
 using HikesOfAmerica.Data.Persistence.Interfaces;
-using HikesOfAmerica.Messaging.Services.Interfaces;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using HikesOfAmerica.Messaging.Core.Consuming;
 using RabbitMQ.Client;
-using System;
-using System.Text;
+using Serilog;
+using System.Threading.Tasks;
 
 namespace HikesOfAmerica.Messaging.Services.Consumers
 {
-    public class LocationsConsumer : DefaultBasicConsumer
+    public class LocationsConsumer : ConsumerBase<Location>
     {
-        private readonly IModel channel;
-        private IRepository repository;
-        private ILogger<LocationsConsumer> logger;
+        private readonly IRepository repository;
 
-        internal LocationsConsumer(IModel argChannel, IRepository argRepository, ILogger<LocationsConsumer> argLogger)
+        public LocationsConsumer(IModel argChannel, IRepository argRepository, ILogger argLogger) : base (argChannel, argLogger)
         {
-            channel = argChannel;
             repository = argRepository;
-            logger = argLogger;
         }
 
-        public async override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, byte[] body)
+        protected async override Task<bool> TryConsume(Location location)
         {
-            logger.LogInformation($"Message consumed: {consumerTag}, redelivered: {redelivered}");
+            await repository.AddLocation(location);
 
-            try
-            {
-                var location = JsonConvert.DeserializeObject<Location>(Encoding.UTF8.GetString(body, 0, body.Length));
-
-                await repository.AddLocation(location);
-
-                channel.BasicAck(deliveryTag, false);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.ToString());
-            }
+            return true;
         }
     }
 }
