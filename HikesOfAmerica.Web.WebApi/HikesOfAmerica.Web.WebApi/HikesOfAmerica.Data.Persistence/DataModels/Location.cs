@@ -1,11 +1,12 @@
-﻿using MongoDB.Bson;
+﻿using HikesOfAmerica.Data.Persistence.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using System.Collections.Generic;
 
 namespace HikesOfAmerica.Data.Persistence.DataModels
 {
-    public class Location
+    public class Location : IDataModel
     {
         [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
         [BsonRepresentation(BsonType.ObjectId)]

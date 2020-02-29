@@ -2,6 +2,8 @@
 using HikesOfAmerica.Messaging.Services.Consumers;
 using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
+using Serilog;
+using Serilog.Events;
 using System;
 using System.IO;
 
@@ -46,7 +48,11 @@ namespace HikesOfAmerica.Messaging.Services
 
             channel.BasicQos(0, 1, false);
 
-            
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Debug)
+                .CreateLogger();
+
             var mongoDbRepository = new MongoDbRepository(dbConnectionString);
             LocationsConsumer locationsConsumer = new LocationsConsumer(channel, mongoDbRepository, null);
             channel.BasicConsume($"{typeof(LocationsConsumer)}Queue", false, locationsConsumer);

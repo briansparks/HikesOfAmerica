@@ -3,7 +3,6 @@ using HikesOfAmerica.Core.Publishing;
 using HikesOfAmerica.Data.Logic;
 using HikesOfAmerica.Data.Persistence;
 using HikesOfAmerica.Data.Persistence.Interfaces;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
