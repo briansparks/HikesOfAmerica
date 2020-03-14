@@ -3,15 +3,13 @@ import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 
-const defaultZoom = 5;
-
 const initialCentering = [36.082,-95.933];
 
 export default class Map extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { "fullScreen" : false, "expandedImageSource" : "" };
+        this.state = { "fullScreen" : false, "expandedImageSource" : ""};
     }
 
     render() {
@@ -54,11 +52,11 @@ export default class Map extends Component {
             }, this)
         }
     
-        if (this.props.viewingCoordinates !== null && this.props.viewingCoordinates !== undefined) {
+        if (this.props.viewingCoordinates !== null && this.props.viewingCoordinates !== undefined && this.props.viewingCoordinates !== "") { 
             return <div id="map">
                 <LeafletMap
                     center={this.props.viewingCoordinates}
-                    zoom={defaultZoom}
+                    zoom={this.props.zoomLevel}
                     maxZoom={11}
                     attributionControl={true}
                     zoomControl={true}
@@ -86,7 +84,7 @@ export default class Map extends Component {
             return <div id="map">
                 <LeafletMap
                     center={initialCentering}
-                    zoom={defaultZoom}
+                    zoom={this.props.zoomLevel}
                     maxZoom={11}
                     attributionControl={true}
                     zoomControl={true}

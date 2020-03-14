@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace HikesOfAmerica.Web.WebApi.Controllers
 {
+    [EnableCors("CorsPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class MapController : ControllerBase
@@ -21,7 +22,6 @@ namespace HikesOfAmerica.Web.WebApi.Controllers
             locationsManager = argLocationsManager;
         }
 
-        [EnableCors("CorsPolicy")]
         [HttpGet("locations")]
         public async  Task<ActionResult<List<Location>>> GetLocations()
         {
@@ -30,7 +30,6 @@ namespace HikesOfAmerica.Web.WebApi.Controllers
             return Ok(result);
         }
 
-        [EnableCors("CorsPolicy")]
         [HttpGet("location/{locationName}")]
         public async Task<ActionResult<List<Location>>> GetLocationByName(string locationName)
         {
@@ -42,7 +41,6 @@ namespace HikesOfAmerica.Web.WebApi.Controllers
             return Ok(result);
         }
 
-        [EnableCors("CorsPolicy")]
         [HttpPut("locations")]
         public async Task<ActionResult<string>> AddLocation(Location location)
         {
@@ -57,11 +55,10 @@ namespace HikesOfAmerica.Web.WebApi.Controllers
             return Ok(result);
         }
 
-        [EnableCors("CorsPolicy")]
         [HttpPost("location/submit")]
         public IActionResult SubmitNewLocation([FromForm] LocationRequest request)
         {
-            request.trails = Helpers.GetListParam<Trail>(Request, "Trails");
+            request.trails = Helpers.GetListParam<Trail>(Request, "trails");
             var result = locationsManager.TrySubmitNewLocation(request);
 
             if (!result)

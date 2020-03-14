@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HikesOfAmerica.Messaging.Services.Consumers
 {
-    public class LocationsConsumer : ConsumerBase<Location>
+    public class LocationsConsumer : ConsumerBase<LocationSubmission>
     {
         private readonly IRepository repository;
 
@@ -16,9 +16,9 @@ namespace HikesOfAmerica.Messaging.Services.Consumers
             repository = argRepository;
         }
 
-        protected async override Task<bool> TryConsume(Location location)
+        protected async override Task<bool> TryConsume(LocationSubmission locationSubmission)
         {
-            await repository.AddLocation(location);
+            await repository.AddLocationSubmission(locationSubmission);
 
             return true;
         }

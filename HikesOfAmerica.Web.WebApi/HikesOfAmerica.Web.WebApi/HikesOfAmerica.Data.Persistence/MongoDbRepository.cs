@@ -1,6 +1,5 @@
 ﻿using HikesOfAmerica.Data.Persistence.DataModels;
 using HikesOfAmerica.Data.Persistence.Interfaces;
-using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
@@ -11,7 +10,8 @@ namespace HikesOfAmerica.Data.Persistence
     public class MongoDbRepository : IRepository
     {
         private const string DatabaseName = "HikesOfAmerica";
-        private const string CollectionName = "Locations";
+        private const string LocationsCollectionName = "Locations";
+        private const string SubmissionsCollectionName = "Submissions";
 
         private readonly MongoClient mongoClient;
 
@@ -22,7 +22,7 @@ namespace HikesOfAmerica.Data.Persistence
 
         public async Task<List<Location>> GetLocationsAsync()
         {
-            var db = mongoClient.GetDatabase(DatabaseName).GetCollection<Location>(CollectionName);
+            var db = mongoClient.GetDatabase(DatabaseName).GetCollection<Location>(LocationsCollectionName);
 
             var result = await db.Find(Builders<Location>.Filter.Empty).ToListAsync();
 
@@ -31,7 +31,7 @@ namespace HikesOfAmerica.Data.Persistence
 
         public async Task<Location> GetLocationByName(string locationName)
         {
-            var db = mongoClient.GetDatabase(DatabaseName).GetCollection<Location>(CollectionName);
+            var db = mongoClient.GetDatabase(DatabaseName).GetCollection<Location>(LocationsCollectionName);
 
             var result = await db.Find(x => string.Equals(x.Name, locationName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefaultAsync();
 
@@ -40,11 +40,20 @@ namespace HikesOfAmerica.Data.Persistence
 
         public async Task<string> AddLocation(Location location)
         {
-            var db = mongoClient.GetDatabase(DatabaseName).GetCollection<Location>(CollectionName);
+            var db = mongoClient.GetDatabase(DatabaseName).GetCollection<Location>(LocationsCollectionName);
 
             await db.InsertOneAsync(location);
 
             return location.Id;
+        }
+
+        public async Task<string> AddLocationSubmission(LocationSubmission locationSubmission)
+        {
+            var db = mongoClient.GetDatabase(DatabaseName).GetCollection<Location>(SubmissionsCollectionName);
+
+            await db.InsertOneAsync(locationSubmission);
+
+            return locationSubmission.Id;
         }
     }
 }

@@ -11,5 +11,7 @@ namespace HikesOfAmerica.Data.Persistence.Interfaces
         Task<Location> GetLocationByName(string locationName);
 
         Task<string> AddLocation(Location location);
+
+        Task<string> AddLocationSubmission(LocationSubmission locationSubmission);
     }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Dropdown } from 'react-bootstrap';
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 const stateDictionary = {
     "AK" : [63.588753, 	-154.493062],
@@ -57,24 +58,41 @@ const stateDictionary = {
 }
 
 export default class Navbar extends Component {
-    filterByState(stateCode) {
-        this.props.switchToStateView(stateDictionary[stateCode]);
+    constructor(props) {
+        super(props);
+
+        const ddOptions = [];
+
+        for (var stateCode in stateDictionary) {
+            ddOptions.push(<Dropdown.Item onClick={this.filterByState.bind(this)} value={stateCode}>{stateCode}</Dropdown.Item>);
+        };
+        
+        this.handleSearch = this.handleSearch.bind(this);
+        this.state = { dropdownOptions : ddOptions, searchValue: null };
+    }
+
+    filterByState(event) {
+        this.props.switchToCoordinatesView(stateDictionary[event.target.innerHTML], 7);
+    }
+
+    handleSearch(event) {
+        event.preventDefault();
+
+        if (this.state.searchValue !== null) {
+            var location = this.props.flattenedLocations.find(location => location.name == this.state.searchValue);
+            this.props.switchToCoordinatesView(location.coordinates, 10);
+        }
     }
 
     render () {
-        const options = [];
-
-        for (var stateCode in stateDictionary) {
-            options.push(<Dropdown.Item onClick={() => this.filterByState(stateCode)}>{stateCode}</Dropdown.Item>);
-        };
+        const typeAheadOptions = this.props.flattenedLocations.map(location => location.name);
 
         return (          
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Hikes of America</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Hikes of America</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarColor03">
                     <ul class="navbar-nav mr-auto">
                         <li>
@@ -90,14 +108,18 @@ export default class Navbar extends Component {
                                 Filter by State
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                {options}
+                                {this.state.dropdownOptions}
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
-
                     <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search by hike name..." />
-                        <button id="searchBtn" class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                        <Typeahead
+                            id="location-search"
+                            options={typeAheadOptions}
+                            placeholder="Search by hike name..."
+                            onChange={search => this.setState({ searchValue : search })}
+                        />
+                        <button id="searchBtn" class="btn btn-secondary my-2 my-sm-0" onClick={this.handleSearch}>Search</button>
                     </form>
                 </div>
             </nav>
