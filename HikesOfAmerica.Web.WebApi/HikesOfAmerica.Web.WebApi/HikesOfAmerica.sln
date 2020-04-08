@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikesOfAmerica.Web.WebApi", "HikesOfAmerica.Web.WebApi\HikesOfAmerica.Web.WebApi.csproj", "{AC13A416-C319-4C1B-8803-C5AA7B6E8759}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HikesOfAmerica.Web.WebApi", "HikesOfAmerica.Web.WebApi\HikesOfAmerica.Web.WebApi.csproj", "{AC13A416-C319-4C1B-8803-C5AA7B6E8759}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikesOfAmerica.Data.Persistence", "HikesOfAmerica.Data.Persistence\HikesOfAmerica.Data.Persistence.csproj", "{3F202FC2-16EC-4534-969C-48A06657743A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HikesOfAmerica.Data.Persistence", "HikesOfAmerica.Data.Persistence\HikesOfAmerica.Data.Persistence.csproj", "{3F202FC2-16EC-4534-969C-48A06657743A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikesOfAmerica.Core", "HikesOfAmerica.Data.Logic\HikesOfAmerica.Core.csproj", "{ECD5F961-29AF-4638-ACE5-F9BAC9D8F7C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HikesOfAmerica.Core", "HikesOfAmerica.Data.Logic\HikesOfAmerica.Core.csproj", "{ECD5F961-29AF-4638-ACE5-F9BAC9D8F7C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikesOfAmerica.Messaging.Services", "HikesOfAmerica.Messaging.Services\HikesOfAmerica.Messaging.Services.csproj", "{99B0637C-E0F7-48B2-9690-61E2ABD2B0F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HikesOfAmerica.Messaging.Services", "HikesOfAmerica.Messaging.Services\HikesOfAmerica.Messaging.Services.csproj", "{99B0637C-E0F7-48B2-9690-61E2ABD2B0F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikesOfAmerica.Tests", "HikesOfAmerica.Tests\HikesOfAmerica.Tests.csproj", "{B363D1B6-767E-49DC-8F30-11A817FC413D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HikesOfAmerica.Tests", "HikesOfAmerica.Tests\HikesOfAmerica.Tests.csproj", "{B363D1B6-767E-49DC-8F30-11A817FC413D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikesOfAmerica.Messaging.Core", "HikesOfAmerica.Messaging.Core\HikesOfAmerica.Messaging.Core.csproj", "{A959351A-FCA6-44B0-B793-1848CA757DBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HikesOfAmerica.Messaging.Core", "HikesOfAmerica.Messaging.Core\HikesOfAmerica.Messaging.Core.csproj", "{A959351A-FCA6-44B0-B793-1848CA757DBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikesOfAmerica.Notifications", "HikesOfAmerica.Notifications\HikesOfAmerica.Notifications.csproj", "{C791ECC2-28E1-4BF4-B1B6-4606A13B3DD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A959351A-FCA6-44B0-B793-1848CA757DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A959351A-FCA6-44B0-B793-1848CA757DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A959351A-FCA6-44B0-B793-1848CA757DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C791ECC2-28E1-4BF4-B1B6-4606A13B3DD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C791ECC2-28E1-4BF4-B1B6-4606A13B3DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C791ECC2-28E1-4BF4-B1B6-4606A13B3DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C791ECC2-28E1-4BF4-B1B6-4606A13B3DD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

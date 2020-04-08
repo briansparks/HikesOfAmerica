@@ -1,5 +1,5 @@
-﻿using HikesOfAmerica.Data.Persistence.DataModels;
-using HikesOfAmerica.Data.Persistence.Interfaces;
+﻿using HikesOfAmerica.Core.DataModels;
+using HikesOfAmerica.Core.Interfaces;
 using HikesOfAmerica.Messaging.Core.Consuming;
 using RabbitMQ.Client;
 using Serilog;
@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace HikesOfAmerica.Messaging.Services.Consumers
 {
-    public class LocationsConsumer : ConsumerBase<Location>
+    public class LocationsConsumer : ConsumerBase<LocationSubmission>
     {
-        private readonly IRepository repository;
+        private readonly ISubmissionsManager submissionsManager;
 
-        public LocationsConsumer(IModel argChannel, IRepository argRepository, ILogger argLogger) : base (argChannel, argLogger)
+        public LocationsConsumer(IModel argChannel, ISubmissionsManager argSubmissionsManager, ILogger argLogger) : base (argChannel, argLogger)
         {
-            repository = argRepository;
+            submissionsManager = argSubmissionsManager;
         }
 
-        protected async override Task<bool> TryConsume(Location location)
+        protected async override Task<bool> TryConsume(LocationSubmission locationSubmission)
         {
-            await repository.AddLocation(location);
+            await submissionsManager.AddLocationSubmissionAsync(locationSubmission);
 
             return true;
         }

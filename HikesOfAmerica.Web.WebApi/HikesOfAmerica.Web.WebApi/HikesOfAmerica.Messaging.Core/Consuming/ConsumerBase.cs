@@ -26,10 +26,10 @@ namespace HikesOfAmerica.Messaging.Core.Consuming
         {
             try
             {
-                logger.Information($"Message of type {this.GetType()} received.");
+                //logger.Information($"Message of type {this.GetType()} received.");
 
                 var obj = JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(body, 0, body.Length));
-                TryConsume(obj);
+                TryConsume(obj).Wait();
                 channel.BasicAck(deliveryTag, false);
             }
             catch (Exception ex)

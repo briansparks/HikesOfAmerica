@@ -14,5 +14,14 @@ namespace HikesOfAmerica.Web.WebApi.Utilities
 
             return obj;
         }
+
+        public static T GetFormParam<T>(HttpRequest request, string param)
+        {
+            request.Form.TryGetValue(param, out var result);
+
+            var obj = JsonConvert.DeserializeObject<T>(result);
+
+            return obj;
+        }
     }
 }

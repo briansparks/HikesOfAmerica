@@ -1,6 +1,8 @@
-﻿using HikesOfAmerica.Data.Persistence;
+﻿using HikesOfAmerica.Core;
+using HikesOfAmerica.Data.Persistence;
 using HikesOfAmerica.Messaging.Services.Consumers;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using Serilog;
 using Serilog.Events;
@@ -53,8 +55,14 @@ namespace HikesOfAmerica.Messaging.Services
                 .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Debug)
                 .CreateLogger();
 
+            //var serviceProvider = new ServiceCollection()
+            //    .AddLogging()
+            //    .AddS
+
             var mongoDbRepository = new MongoDbRepository(dbConnectionString);
-            LocationsConsumer locationsConsumer = new LocationsConsumer(channel, mongoDbRepository, null);
+            var submissionsManager = new SubmissionsManager(mongoDbRepository, null);
+
+            LocationsConsumer locationsConsumer = new LocationsConsumer(channel, submissionsManager, null);
             channel.BasicConsume($"{typeof(LocationsConsumer)}Queue", false, locationsConsumer);
 
             Console.ReadLine();
