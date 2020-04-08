@@ -35,5 +35,6 @@ msbuild.wrn
 .vs/
 
 node_modules
+dist
 
 launchSettings.json

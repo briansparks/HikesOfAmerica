@@ -20,28 +20,28 @@ export default class Map extends Component {
             this.props.locations.forEach(function (location) {
                 var pos = [location.longitude, location.latitude];
     
-                var trails = location.trails.map((trail) => {
-                    return <div id="trailInfo">
-                            <p class="trailsDetails"><b>Name: </b>{trail.name}</p>
-                            <p class="trailsDetails"><b>Distance: </b>{trail.distance} mi</p>
+                var trails = location.trails.map((trail, index) => {
+                    return <div id="trailInfo" key={index}>
+                            <p className="trailsDetails"><b>Name: </b>{trail.name}</p>
+                            <p className="trailsDetails"><b>Distance: </b>{trail.distance} mi</p>
                         </div>
                 });
     
-                var images = location.images.map(function(imageUrl) {
-                    return <img id="locationImage" src={imageUrl} onClick={() => this.setState({ fullScreen: true, expandedImageSource : imageUrl })} />
+                var images = location.images.map(function(imageUrl, index) {
+                    return <img id="locationImage" key={index} src={imageUrl} onClick={() => this.setState({ fullScreen: true, expandedImageSource : imageUrl })} />
                 }, this);
     
                 markers.push(
-                    <Marker position={pos}> 
+                    <Marker position={pos} key={pos}> 
                         <Popup>
                             <h1 id="hikeTitle">{location.name}</h1>
                             <p>{location.description}</p>
                             <div>
-                                <h2 class="subHeader">Trails</h2>
+                                <h2 className="subHeader">Trails</h2>
                                 <div id="trailsBody">
                                     {trails}
                                 </div>
-                                <h2 class="subHeader">Photos</h2>
+                                <h2 className="subHeader">Photos</h2>
                                 <div id="imagesBody">
                                     {images}
                                 </div>

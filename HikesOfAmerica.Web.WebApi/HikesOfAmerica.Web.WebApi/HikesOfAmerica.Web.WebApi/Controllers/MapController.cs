@@ -1,11 +1,12 @@
-﻿using HikesOfAmerica.Core.Interfaces;
-using HikesOfAmerica.Core.Requests.LocationRequest;
-using HikesOfAmerica.Data.Persistence.DataModels;
-using HikesOfAmerica.Web.WebApi.Utilities;
+﻿using HikesOfAmerica.Core.DataModels;
+using HikesOfAmerica.Core.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
+using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace HikesOfAmerica.Web.WebApi.Controllers
@@ -23,48 +24,61 @@ namespace HikesOfAmerica.Web.WebApi.Controllers
         }
 
         [HttpGet("locations")]
-        public async  Task<ActionResult<List<Location>>> GetLocations()
+        public async Task<ActionResult<List<Location>>> GetLocations()
         {
-            var result = await locationsManager.GetLocationsAsync();
+            var result = new List<Location>();
 
-            return Ok(result);
+            try
+            {
+                result = await locationsManager.GetLocationsAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Failed to get locations.");
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpGet("location/{locationName}")]
         public async Task<ActionResult<List<Location>>> GetLocationByName(string locationName)
         {
-            var result = await locationsManager.GetLocationsAsync();
+            try
+            {
+                var result = await locationsManager.GetLocationsAsync();
 
-            if (result == null)
-                return NotFound();
+                if (result == null)
+                    return NotFound();
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "failed to get location by name.");
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpPut("locations")]
         public async Task<ActionResult<string>> AddLocation(Location location)
         {
-            if (location == null)
-                return BadRequest();
+            try
+            {
+                if (location == null)
+                    return BadRequest();
 
-            var result = await locationsManager.AddLocation(location);
+                var result = await locationsManager.AddLocationAsync(location);
 
-            if (result == null)
+                if (result == null)
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"failed to add location: ${location?.Name}");
                 return StatusCode(StatusCodes.Status500InternalServerError);
-
-            return Ok(result);
-        }
-
-        [HttpPost("location/submit")]
-        public IActionResult SubmitNewLocation([FromForm] LocationRequest request)
-        {
-            request.trails = Helpers.GetListParam<Trail>(Request, "trails");
-            var result = locationsManager.TrySubmitNewLocation(request);
-
-            if (!result)
-                return BadRequest();
-
-            return Ok();
+            }
         }
     }
 }

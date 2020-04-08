@@ -67,7 +67,7 @@ export default class Home extends Component {
             }
           }    
         
-        axios.post(`https://localhost:44308/api/map/location/submit`, formData, config)
+        axios.post(`https://localhost:44308/api/submissions/`, formData, config)
         .then(this.setState({ imageUploadStatus : "success" }))
         .catch(err => {console.log(err); this.setState({ imageUploadStatus : "failed" });});  
     };
@@ -110,39 +110,39 @@ function SubmissionModal(props) {
     
     return (
         <div className={showHideClassName}>
-          <section class="modal-main">
+          <section className="modal-main">
           <button type="button" id="close" aria-label="Close" onClick={props.handleClose}>
             <span aria-hidden="true">&times;</span>
           </button>
-          <form class="form-inline my-2 my-lg-0" onSubmit={props.handleSubmit}>
-              <table class="submit-table">
+          <form className="form-inline my-2 my-lg-0" onSubmit={props.handleSubmit}>
+              <table className="submit-table">
                     <tbody>
-                        <tr class="submit-row">
-                            <td class="left-td"><p class="form-element"><b>Location Name: </b></p></td>
-                            <td><input class="form-control mr-sm-2 form-input" id="location-name" type="text" placeholder="Name of the park or location..." /></td>
+                        <tr className="submit-row">
+                            <td className="left-td"><p className="form-element"><b>Location Name: </b></p></td>
+                            <td><input className="form-control mr-sm-2 form-input" id="location-name" type="text" placeholder="Name of the park or location..." /></td>
                         </tr>
-                        <tr class="submit-row">
-                            <td class="left-td"><p class="form-element"><b>Hike/Trail Name: </b></p></td>
-                            <td><input class="form-control mr-sm-2 form-input" id="hike-name" name="trails" type="text" placeholder="Trailhead or hike..." /></td>
+                        <tr className="submit-row">
+                            <td className="left-td"><p className="form-element"><b>Hike/Trail Name: </b></p></td>
+                            <td><input className="form-control mr-sm-2 form-input" id="hike-name" name="trails" type="text" placeholder="Trailhead or hike..." /></td>
                         </tr>
-                        <tr class="submit-row">
-                            <td class="left-td"><p class="form-element"><b>Description </b>(optional): </p></td>
-                            <td><input class="form-control mr-sm-2 form-input" id="hike-name" name="description" type="text" placeholder="Steep hike with rocky terrain..." /></td>
+                        <tr className="submit-row">
+                            <td className="left-td"><p className="form-element"><b>Description </b>(optional): </p></td>
+                            <td><input className="form-control mr-sm-2 form-input" id="hike-name" name="description" type="text" placeholder="Steep hike with rocky terrain..." /></td>
                         </tr>
-                        <tr class="submit-row">
-                            <td class="left-td"><p class="form-element"><b>Distance </b>(in miles): </p></td>
-                            <td><input class="form-control mr-sm-2 form-input" id="distance" type="text" placeholder="ex: 7.2" /></td>
+                        <tr className="submit-row">
+                            <td className="left-td"><p className="form-element"><b>Distance </b>(in miles): </p></td>
+                            <td><input className="form-control mr-sm-2 form-input" id="distance" type="text" placeholder="ex: 7.2" /></td>
                         </tr>
-                        <tr class="submit-row">
-                            <td class="left-td"><p class="form-element"><b>Latitude: </b></p></td>
-                            <td><input class="form-control mr-sm-2 form-input" id="latitude" type="text" placeholder="ex: 72.313" /></td>
+                        <tr className="submit-row">
+                            <td className="left-td"><p className="form-element"><b>Latitude: </b></p></td>
+                            <td><input className="form-control mr-sm-2 form-input" id="latitude" type="text" placeholder="ex: 72.313" /></td>
                         </tr>
-                        <tr class="submit-row">
-                            <td class="left-td"><p class="form-element"><b>Longitude: </b></p></td>
-                            <td><input class="form-control mr-sm-2 form-input" id="longitude" type="text" placeholder="ex: -30.354" /></td>
+                        <tr className="submit-row">
+                            <td className="left-td"><p className="form-element"><b>Longitude: </b></p></td>
+                            <td><input className="form-control mr-sm-2 form-input" id="longitude" type="text" placeholder="ex: -30.354" /></td>
                         </tr>
-                        <tr class="submit-row">
-                            <td class="left-td"><p class="form-element"><b>Image</b> (optional): </p></td>
+                        <tr className="submit-row">
+                            <td className="left-td"><p className="form-element"><b>Image</b> (optional): </p></td>
                             <td>                   
                                 <ImageUploader
                                     withIcon={false}
@@ -156,7 +156,7 @@ function SubmissionModal(props) {
                         </tr>
                     </tbody>
               </table>
-              <button id="submit-btn" class="btn btn-secondary my-2 my-sm-0" type="Submit">Submit</button>
+              <button id="submit-btn" className="btn btn-secondary my-2 my-sm-0" type="Submit">Submit</button>
             </form>
           </section>
         </div>

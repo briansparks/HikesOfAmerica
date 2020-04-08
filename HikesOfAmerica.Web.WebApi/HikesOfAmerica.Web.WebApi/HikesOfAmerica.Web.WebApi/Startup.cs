@@ -1,8 +1,7 @@
-﻿using HikesOfAmerica.Core.Interfaces;
+﻿using HikesOfAmerica.Core;
+using HikesOfAmerica.Core.Interfaces;
 using HikesOfAmerica.Core.Publishing;
-using HikesOfAmerica.Data.Logic;
 using HikesOfAmerica.Data.Persistence;
-using HikesOfAmerica.Data.Persistence.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -36,18 +35,29 @@ namespace HikesOfAmerica.Web.WebApi
                 .AllowAnyHeader())
             );
 
-            var factory = new ConnectionFactory() { HostName = "localhost" };
-            var connection = factory.CreateConnection();
+            var host = Configuration["RabbitMQ:Host"];
+            var user = Configuration["RabbitMQ:Username"];
+            var pwd = Configuration["RabbitMQ:Password"];
+
+            ConnectionFactory connectionFactory = new ConnectionFactory
+            {
+                UserName = user,
+                Password = pwd,
+                HostName = host
+            };
+
+            var connection = connectionFactory.CreateConnection();
             var channel = connection.CreateModel();
 
-            channel.ExchangeDeclare(exchange: "locations", type: ExchangeType.Fanout);
-            channel.QueueBind("HikesOfAmerica.Messaging.Services.Consumers.LocationsConsumerQueue", "locations", "");
+            channel.ExchangeDeclare(exchange: "Locations", type: ExchangeType.Fanout);
+            channel.QueueBind("HikesOfAmerica.Messaging.Services.Consumers.LocationsConsumerQueue", "Locations", "");
 
             var publisher = new RabbitMQPublisher(channel);
 
             services.AddSingleton<IPublisher>(publisher);
             services.AddSingleton<IRepository>(repo);
-            services.AddSingleton<ILocationsManager>(new LocationsManager(publisher, repo, null));
+            services.AddSingleton<ILocationsManager>(new LocationsManager(repo));
+            services.AddSingleton<ISubmissionsManager>(new SubmissionsManager(repo, publisher));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

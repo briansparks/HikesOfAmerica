@@ -1,13 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MongoDB.Bson" Version="2.10.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.10.1" />
     <PackageReference Include="MongoDB.Driver.Core" Version="2.10.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HikesOfAmerica.Data.Logic\HikesOfAmerica.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

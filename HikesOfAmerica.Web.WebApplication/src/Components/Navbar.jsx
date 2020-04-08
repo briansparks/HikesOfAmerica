@@ -2,6 +2,77 @@ import React, { Component } from "react";
 import { Dropdown } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 
+export default class Navbar extends Component {
+    constructor(props) {
+        super(props);
+
+        const ddOptions = [];
+
+        for (var stateCode in stateDictionary) {
+            ddOptions.push(<Dropdown.Item onClick={this.filterByState.bind(this)} value={stateCode} key={stateCode}>{stateCode}</Dropdown.Item>);
+        };
+        
+        this.handleSearch = this.handleSearch.bind(this);
+        this.state = { dropdownOptions : ddOptions, searchValue: null };
+    }
+
+    filterByState(event) {
+        this.props.switchToCoordinatesView(stateDictionary[event.target.innerHTML], 7);
+    }
+
+    handleSearch(event) {
+        event.preventDefault();
+
+        if (this.state.searchValue !== null) {
+            var location = this.props.flattenedLocations.find(location => location.name == this.state.searchValue);
+            this.props.switchToCoordinatesView(location.coordinates, 10);
+        }
+    }
+
+    render () {
+        const typeAheadOptions = this.props.flattenedLocations.map(location => location.name);
+
+        return (          
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <a className="navbar-brand" href="#">Hikes of America</a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarColor03">
+                    <ul className="navbar-nav mr-auto">
+                        <li>
+                            <div className="form-inline my-2 my-lg-0">
+                                <button id="addNewLocationBtn" className="btn btn-secondary my-2 my-sm-0" onClick={this.props.showModal}>+ Submit New Hike</button>
+                            </div>
+                        </li>   
+                    </ul>
+
+                    <div id="stateDropdown">
+                        <Dropdown>
+                            <Dropdown.Toggle variant="Primary" id="dropdown-custom-1">
+                                Filter by State
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                {this.state.dropdownOptions}
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
+                    <form className="form-inline my-2 my-lg-0">
+                        <Typeahead
+                            id="location-search"
+                            options={typeAheadOptions}
+                            placeholder="Search by hike name..."
+                            onChange={search => this.setState({ searchValue : search })}
+                        />
+                        <button id="searchBtn" className="btn btn-secondary my-2 my-sm-0" onClick={this.handleSearch}>Search</button>
+                    </form>
+                </div>
+            </nav>
+        );
+    }
+}
+
+
 const stateDictionary = {
     "AK" : [63.588753, 	-154.493062],
     "AL" : [32.318231, 	-86.902298],
@@ -55,74 +126,4 @@ const stateDictionary = {
     "WI" : [43.78444, 	-88.787868],
     "WY" : [43.075968, 	-107.290284],
     "WV" : [38.597626, 	-80.4549030]
-}
-
-export default class Navbar extends Component {
-    constructor(props) {
-        super(props);
-
-        const ddOptions = [];
-
-        for (var stateCode in stateDictionary) {
-            ddOptions.push(<Dropdown.Item onClick={this.filterByState.bind(this)} value={stateCode}>{stateCode}</Dropdown.Item>);
-        };
-        
-        this.handleSearch = this.handleSearch.bind(this);
-        this.state = { dropdownOptions : ddOptions, searchValue: null };
-    }
-
-    filterByState(event) {
-        this.props.switchToCoordinatesView(stateDictionary[event.target.innerHTML], 7);
-    }
-
-    handleSearch(event) {
-        event.preventDefault();
-
-        if (this.state.searchValue !== null) {
-            var location = this.props.flattenedLocations.find(location => location.name == this.state.searchValue);
-            this.props.switchToCoordinatesView(location.coordinates, 10);
-        }
-    }
-
-    render () {
-        const typeAheadOptions = this.props.flattenedLocations.map(location => location.name);
-
-        return (          
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Hikes of America</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarColor03">
-                    <ul class="navbar-nav mr-auto">
-                        <li>
-                            <div class="form-inline my-2 my-lg-0">
-                                <button id="addNewLocationBtn" class="btn btn-secondary my-2 my-sm-0" onClick={this.props.showModal}>+ Submit New Hike</button>
-                            </div>
-                        </li>   
-                    </ul>
-
-                    <div id="stateDropdown">
-                        <Dropdown>
-                            <Dropdown.Toggle variant="Primary" id="dropdown-custom-1">
-                                Filter by State
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                {this.state.dropdownOptions}
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </div>
-                    <form class="form-inline my-2 my-lg-0">
-                        <Typeahead
-                            id="location-search"
-                            options={typeAheadOptions}
-                            placeholder="Search by hike name..."
-                            onChange={search => this.setState({ searchValue : search })}
-                        />
-                        <button id="searchBtn" class="btn btn-secondary my-2 my-sm-0" onClick={this.handleSearch}>Search</button>
-                    </form>
-                </div>
-            </nav>
-        );
-    }
 }
