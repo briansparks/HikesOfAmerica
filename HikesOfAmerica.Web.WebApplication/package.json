@@ -23,7 +23,7 @@
     "react-images-upload": "^1.2.7",
     "react-leaflet": "^2.6.1",
     "style-loader": "^1.1.2",
-    "svg-inline-loader": "^0.8.0"
+    "svg-inline-loader": "^0.8.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -31,7 +31,7 @@
     "@babel/preset-react": "^7.8.3",
     "babel-loader": "^8.0.6",
     "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.10.1"
   }
 }
